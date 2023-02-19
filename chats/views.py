@@ -12,6 +12,14 @@ class ChatRoomsListAPIView(generics.ListCreateAPIView):
     serializer_class = ChatRoomsSerializer
 
 
+class AdminChatRoomListAPIView(generics.DestroyAPIView):
+    serializer_class = ChatRoomsSerializer
+
+    def get_queryset(self):
+        room = self.kwargs['roomid']
+        return Chat_room.objects.filter(id=room)
+
+
 class ChatRoomListAPIView(generics.ListAPIView):
     serializer_class = ChatRoomsSerializer
 
@@ -20,7 +28,7 @@ class ChatRoomListAPIView(generics.ListAPIView):
         return Chat_room.objects.filter(id=room)
 
 
-class ChatRoomsMsgsAPIView(generics.ListAPIView):
+class ChatRoomsMsgsAPIView(generics.ListCreateAPIView):
     serializer_class = ChatMsgSerializer
     queryset = Chat_message.objects.all()
 
